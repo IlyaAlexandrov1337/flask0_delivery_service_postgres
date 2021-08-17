@@ -185,7 +185,7 @@ if __name__ == "__main__":
         reader = DictReader(file)
         for row in reader:
             category = Category(id=row['id'], title=row['title'])
-            if Category.query.get(id):
+            if Category.query.get(row['id']):
                 break
             db.session.add(category)
         db.session.commit()
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         for row in reader:
             meal = Meal(id=row['id'], title=row['title'], price=row['price'], description=row['description'],
                         picture=f"static/{row['picture']}", category=Category.query.get(int(row['category_id'])))
-            if Meal.query.get(id):
+            if Meal.query.get(row['id']):
                 break
             db.session.add(meal)
         db.session.commit()
