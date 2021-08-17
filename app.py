@@ -179,4 +179,20 @@ def order_render():
 
 
 if __name__ == "__main__":
+    
+    with open('raw_database/categories.csv', encoding='UTF8') as file:
+        reader = DictReader(file)
+        for row in reader:
+            category = Category(id=row['id'], title=row['title'])
+            db.session.add(category)
+        db.session.commit()
+
+    with open('raw_database/meals.csv', encoding='UTF8') as file:
+        reader = DictReader(file)
+        for row in reader:
+            meal = Meal(id=row['id'], title=row['title'], price=row['price'], description=row['description'],
+                        picture=f"static/{row['picture']}", category=Category.query.get(int(row['category_id'])))
+            db.session.add(meal)
+        db.session.commit()
+        
     app.run()
