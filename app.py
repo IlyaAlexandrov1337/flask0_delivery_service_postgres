@@ -55,7 +55,7 @@ def main_render():
     if form.is_submitted() and request.method == "POST":
         meal_id = form.meal.data
         meal = Meal.query.get(meal_id)
-        now = datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+        now = datetime.datetime.now()
         if not order:
             mail = User.query.get(user_id).mail
             new_order = Order(date=now, sum=meal.price, status='Формируется', mail=mail, name='', phone='', address='',
@@ -155,7 +155,7 @@ def cart_render():
             form.errors.clear()
             meal_id = del_form.meal.data
             meal = Meal.query.get(meal_id)
-            now = datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+            now = datetime.datetime.now()
             order.sum -= meal.price
             order.date = now
             order.meals.remove(meal)
